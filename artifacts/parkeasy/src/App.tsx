@@ -231,50 +231,7 @@ function Home() {
               </div>
             )}
           </section>
-
-          <section className="panel patterns" aria-labelledby="patterns-heading">
-            <div className="pattern-copy">
-              <div className="eyebrow">Under the hood</div>
-              <h2 id="patterns-heading">Three patterns, one lot.</h2>
-              <p>The domain objects own decisions and state changes. The screen simply collects choices and reflects the resulting snapshot.</p>
-              <div className="pattern-list">
-                <Pattern number="01" title="Singleton · one shared lot" description="ParkingLot.getInstance() keeps a single in-memory set of spaces, active tickets, and history." />
-                <Pattern number="02" title="Factory · the right vehicle" description="VehicleFactory creates a typed vehicle and maps Bike, Car, or Truck to its exact slot size." />
-                <Pattern number="03" title="Strategy · swap the behavior" description="Fee and payment strategies vary the calculation or demo payment without changing the exit workflow." />
-              </div>
-            </div>
-            <div className="diagram" aria-label="Text class diagram">
-              <div className="diagram-head"><span>CLASS MAP</span><span>PLAIN TEXT</span></div>
-              <div className="diagram-body">
-                <pre>{`┌─────────────────────┐
-│     ParkingLot      │◆── ParkingSlot[]
-├─────────────────────┤◆── Ticket[]
-│ +getInstance()      │
-│ +park(vehicle)      │
-│ +completeExit(...)  │
-│ +getSnapshot()      │
-└──────────┬──────────┘
-           │ uses
-   ┌───────┴─────────┐
-   │                 │
-┌──▼────────────┐  ┌─▼───────────────┐
-│VehicleFactory │  │  FeeStrategy    │
-├───────────────┤  ├─────────────────┤
-│ +create(...)  │  │ +calculate(...) │
-└──┬────────────┘  └──┬───────────┬──┘
-   │ creates           │           │
- Bike · Car · Truck  HourlyFee   FlatFee
-                       └─────┬─────┘
-                             │
-                    PaymentStrategy
-                    Card · UPI · Cash
-
-// ◆ owns state   ··· implements strategy`}</pre>
-              </div>
-            </div>
-          </section>
         </div>
-        <footer className="footer">PARKEASY / MEMORY-ONLY EDUCATIONAL DEMO</footer>
       </main>
     </div>
   );
@@ -305,10 +262,6 @@ function TicketReceipt({ ticket }: { ticket: Ticket }) {
     <div><Clock3 size={12} style={{ verticalAlign: 'middle' }} /> Entry {formatDate(ticket.entryTime)}</div>
     {ticket.exitTime && <div>Exit {formatDate(ticket.exitTime)} · {ticket.paymentMethod} · <strong>Rs {ticket.fee?.toFixed(2)}</strong></div>}
   </div>;
-}
-
-function Pattern({ number, title, description }: { number: string; title: string; description: string }) {
-  return <div className="pattern-item"><span className="pattern-num">{number}</span><div><strong>{title}</strong><p>{description}</p></div></div>;
 }
 
 function Router() {
